@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
     },
     pageTitle: {
         fontSize:15,
-        fontFamily:"OpenSans_800ExtraBold",
+        // fontFamily:"OpenSans_800ExtraBold",
         color:'#7579e7'
     },
     flag: {

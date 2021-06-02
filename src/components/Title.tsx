@@ -4,7 +4,7 @@ import { COLORS } from '../../assets/colors';
 
 const Title = ({ philippines }:any) => {
     return (
-        <View style={styles.philippinesWrapper}>
+       <View style={styles.philippinesWrapper}>
         <Text style={styles.philippinesTitle}>Philippines</Text>
         <Text style={styles.philippinesUpdated}>Latest update as of {philippines && new Date(philippines.updated).toDateString()}</Text>
       </View>
@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
     philippinesUpdated:{
       fontSize:16,
       color:COLORS.primary,
-      fontFamily:'OpenSans_400Regular'
+      // fontFamily:'OpenSans_400Regular'
     },
   
   });

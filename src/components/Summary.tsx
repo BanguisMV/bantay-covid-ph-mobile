@@ -12,7 +12,7 @@ const Summary = ( { data }:any ) => {
         title='Cases' 
         today={data?.todayCases} 
         statistic={data?.cases} 
-        bottomRightValue={95} 
+        bottomRightValue={data?.active} 
         bottomRightTitle='Active' 
         color={COLORS.blue}
         data={data}
@@ -22,7 +22,6 @@ const Summary = ( { data }:any ) => {
         title='Deaths' 
         today={data?.todayDeaths} 
         statistic={data?.deaths} 
-        bottomRightValue={9523} 
         bottomRightTitle='Death Rate' 
         color={COLORS.red}
         rate={true}
@@ -33,11 +32,11 @@ const Summary = ( { data }:any ) => {
         title='Recovered' 
         today={data?.todayRecovered} 
         statistic={data?.recovered} 
-        bottomRightValue={923} 
         bottomRightTitle='Recovery Rate' 
         color={COLORS.yellow}
         rate={true}
         data={data}
+  
     />
     </Fragment>
     )
@@ -47,11 +46,11 @@ type ICard = {
     title:string;
     statistic:number;
     today:number;
-    bottomRightValue:number;
-    bottomRightTitle:string;
+    bottomRightValue?:number;
+    bottomRightTitle?:string;
     color:string;
     rate?:boolean;
-    data:any
+    data:any;
 }
 const Card = ({ 
     title,
@@ -68,24 +67,22 @@ const Card = ({
     }
     let bottomRight
     if(rate) {
-        bottomRight = 
-        <CountUp isCounting end={((statistic / data?.cases) * 100)} duration={2.9} decimalPlaces={2}/>
-
+        bottomRight =  data && <CountUp isCounting  end={((statistic / data?.cases) * 100)} duration={2.2} decimalPlaces={2} /> 
     } else {
-        bottomRight = <CountUp isCounting end={bottomRightValue} duration={3} thousandsSeparator=','/> 
+        bottomRight =  data && <CountUp isCounting  end={bottomRightValue} duration={3.2} thousandsSeparator=','/>  
     }
     return (
     <View style={[styles.summaryWrapper, theme]}>
     <Text style={[styles.title, { backgroundColor:color }]}>{title}</Text>
        <View style={styles.statistics}>
             <Text style={[styles.total, {color:color}]}> 
-            <CountUp isCounting end={statistic} duration={2.2} thousandsSeparator=',' />
+         {data &&   <CountUp isCounting  end={statistic} duration={5.2} thousandsSeparator=',' /> }
           </Text>
             <Text style={[styles.todayAdded, {color:color}]}>+
-            <CountUp isCounting end={today} duration={2.9} thousandsSeparator=','  /> Today</Text>
+           { data && <CountUp isCounting end={today} duration={5.2} thousandsSeparator=','  /> } Today</Text>
        </View>
         <Text style={[styles.bottomRight, { backgroundColor:color}]}> 
-        {bottomRight}{rate ? "%" : ''}  {bottomRightTitle}
+        {data && bottomRight}{rate ? "%" : ''}  {bottomRightTitle}
         </Text>
    </View>
     )
@@ -122,7 +119,7 @@ const styles = StyleSheet.create({
         paddingHorizontal:20,
         paddingVertical:8,
         borderBottomRightRadius:10,
-        fontFamily:'OpenSans_700Bold',
+        // fontFamily:'OpenSans_700Bold',
 
     },
     statistics: {
@@ -133,19 +130,19 @@ const styles = StyleSheet.create({
     total:{
         fontSize:28,
         color:COLORS.blue,
-        fontFamily:'OpenSans_700Bold'
+        // fontFamily:'OpenSans_700Bold'
     },
     todayAdded:{
         fontSize:15,
         color:COLORS.blue,
-        fontFamily:'OpenSans_400Regular'
+        // fontFamily:'OpenSans_400Regular'
     },
     bottomRight:{
         fontSize:15,
         color:COLORS.white,
         backgroundColor:COLORS.blue,
         position:'absolute',
-        fontFamily:'OpenSans_700Bold',
+        // fontFamily:'OpenSans_700Bold',
         bottom:0,
         right:0,
         zIndex:100,
